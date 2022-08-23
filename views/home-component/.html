@@ -1,2 +1,167 @@
-<h1>Welcome</h1>
-<h3 myIf="[{show}]">This project is called [[title]]</h3 endIf>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Londrina+Shadow&display=swap" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<style>
+    h1 {
+        font-family: 'Londrina Shadow', cursive;
+        ;
+        font-size: 100px;
+        position: absolute;
+        color: black;
+    }
+
+    body {
+        color: white;
+    }
+
+    header {
+        width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 20vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 64px;
+        height: 200px;
+    }
+
+    header div {
+        width: 100%;
+        height: 100%;
+    }
+
+    #title2 {
+        margin-top: 32px;
+    }
+
+    #title3 {
+        margin-top: 64px;
+    }
+
+    #title4 {
+        margin-top: 96px;
+    }
+
+    .highlight {
+        border-radius: 5px;
+        background-color: #ca0808;
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        margin: 16px;
+    }
+
+    pre,
+    xmp {
+        margin: 0;
+        color: white;
+    }
+
+    section {
+        width: 50%;
+        margin: 16px;
+        position: relative;
+    }
+
+    content {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .card {
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        background-color: #353535;
+    }
+
+    section h6 {
+        position: absolute;
+        left: -16px;
+        top: -16px;
+        border-radius: 100%;
+        padding: 8px;
+        background-color: #ca0808;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 32px;
+        height: 32px;
+        z-index: 1;
+    }
+</style>
+
+<header>
+    <div>
+        <h1 id="title3">[[title]]</h1>
+    </div>
+    <div>
+        <h1 id="title2">[[title]]</h1>
+    </div>
+    <div>
+        <h1 id="title1">[[title]]</h1>
+    </div>
+    <div>
+        <h1 id="title4">[[title]]</h1>
+    </div>
+</header>
+<content>
+    <section>
+        <h6>1.</h6>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Eine neue Komponente erstellen</h5>
+                <p class="card-text">Verwende die generate.bat Datei zum Generieren einer neuen Komponente:</p>
+                <div class="highlight">
+                    <pre><code class="language-cmd" data-lang="cmd">.\generate.bat component nameOfTheComponent</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <h6>2.</h6>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Einen neuen Controller erstellen</h5>
+                <p class="card-text">Verwende die generate.bat Datei zum Generieren eines neuen Controllers:</p>
+                <div class="highlight">
+                    <pre><code class="language-cmd" data-lang="cmd">.\generate.bat controller NameOfTheController</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <h6>3.</h6>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Daten an die View weitergeben</h5>
+                <p class="card-text">Die $this->view() Funktion hat einen optionalen 2. Parameter zum Hinzufügen von
+                    Daten für die View</p>
+                <div class="highlight">
+                    <pre><code class="language-php" data-lang="php">return $this->view('home', ['title' => 'Hello World']);</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+</content>
+<script>
+    $("#title1").hide();
+    $("#title2").hide();
+    $("#title3").hide();
+    $("#title4").hide();
+
+    setTimeout(function () {
+        $("#title4").show(300);
+        setTimeout(function () {
+            $("#title3").show(200);
+            setTimeout(function () {
+                $("#title2").show(200);
+                setTimeout(function () {
+                    $("#title1").show(300);
+                }, 100)
+            }, 100)
+        }, 100)
+    }, 500);
+</script>

@@ -1,6 +1,12 @@
-# Einführung in dieses Php-Framework
+# SpideySense
 
-## Components
+## Cloning
+
+Clone dieses Repository in den htdocs Ordner deiner Xampp Installation. Nachdem du Xampp gestartet hast kannst du dein Programm unter localhost/spideysense erreichen.
+
+## Einführung in dieses Php-Framework
+
+### Components
 
 Unter /views findest du die index.html. In dieser File findest du den größten Unterschied zu der Entwicklungsweise, die du bisher kennengelernt hast.
 Eine Seite besteht nicht mehr aus *einer* html File, *einer* css File und *einer* js File, sondern aus mehreren Komponenten, die jeweils aus diesen drei Dateien bestehen.
@@ -14,13 +20,18 @@ Eine neue Komponente anlegen kannst du mit dem generate.bat File
 
 ```cmd
 
-generate.bat nameOfTheComponent
+generate.bat component nameOfTheComponent
 ```
 
-## Controllers
+### Controllers
 
 Unter /Presentation/Controllers findest du einen Homecontroller. Ein Controller regelt welche Seite in welcher Situation angezeigt werden soll.
-Der HomeController kann um Methoden erweitert werden, die aber alle mit der Homepage zu tun haben müssen. Wenn du die Restaurants einer Region anzeigen willst, regelt dies z.B. ein RestaurantController.
+Der HomeController kann um Methoden erweitert werden, die aber alle mit der Homepage zu tun haben müssen. Wenn du die Restaurants einer Region anzeigen willst, regelt dies z.B. ein RestaurantController. Neue Controller kannst du über die generate.bat File erstellen:
+
+```cmd
+
+generate.bat controller NameOfTheController
+```
 
 Die Methoden können nicht willkürlich benannt werden. Sie müssen dem folgenden Schema folgen: REST-Methode(GET|POST|PUT|DELETE)_\<Action>
 
@@ -46,7 +57,7 @@ return $this->redirect('home', 'index');
 
 Eine GET-Action soll immer \$this->view() aufrufen und eine POST-Action immer $this->redirect().
 
-## index.php
+### index.php
 
 Dieses Framework verwendet Dependency Injection. Das ermöglicht dir, dass du in jedem Controller, Query, Command oder Repository andere Klassen verwenden kannst, ohne die Objekte dafür zu selbst erstellen.
 
@@ -82,7 +93,7 @@ $sp->register(\Application\TitleQuery::class, function(){
 });
 ```
 
-## Views
+### Views
 
 Die html Datei einer Komponente ist keine normale html Datei. In dieser kannst du php einbinden, als wäre es eine Php File.
 
@@ -113,3 +124,45 @@ Ifs und For-Schleifen kannst du auch ganz leicht einbinden mit:
 ```
 
 **Am Ende das endIf und endFor nicht vergessen!**
+
+### Weiterleitungen
+
+#### Links
+
+Interne Links sollen immer mit der internen $url Funktion erstellt werden, um Fehler zu vermeiden. Diese wird wie folgt verwendet:
+
+```php
+//Für Links musst du den php Modus selbstständig beenden mit dem Zeichen *}
+<a href="@$url('ControllerName', 'ActionName', optionalDataArray);*}">Link to my action</a>
+```
+
+#### Formulare
+
+```php
+//Die Werte aller inputs mit einem name können anschließend ausgelesen werden
+@$beginForm('ControllerName', 'ActionName', method: 'get|put|post|delete', cssClass: 'form-inline');  
+<label for="subject" class="form-label">Subject</label>
+<input class="form-control" id="subject" name="subject">
+
+<label for="content">Content</label>
+<textarea class="form-control" rows="5" name="content"></textarea>
+    
+<button type="submit" class="btn btn-primary">Post</button>
+@$endForm();
+```
+
+Im Controller können die Werte nun verarbeitet werden:
+
+```php
+
+public function RestMethod_ActionName(): \Presentation\MVC\ActionResult
+{
+    //Wenn du dir sicher bist, dass es diesen Parameter immer geben wird. Nur bei POST
+    $subject = $this->getParam('subject');
+    //Ein GET Request muss nicht zwingend alle Parameter übergeben. TryGetParam überprüft ob der Wert verfügbar ist.
+    if($this->tryGetParam('content', $content)){
+        echo "Content received";
+    }
+    return $this->redirect('Blog', 'My');
+}
+```
